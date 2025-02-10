@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using SocketIOClient;
 using System.Threading.Tasks;
+using SocketIOClient.Newtonsoft.Json;
+using Newtonsoft.Json;
 public class SocketConnection : MonoBehaviour
 {
     private static SocketIO client;
+    private const string nextUser = "nextUser";
+    private const string nextTurn = "nextTurn";
 
+    public LogManager logManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,8 +30,27 @@ public class SocketConnection : MonoBehaviour
         client.OnConnected += async (sender, e) =>
         {
             Debug.Log("Connected");
-            await client.EmitAsync("message", "Hello from Unity");
+            // logManager.AddLog("Connected");
+            await client.EmitAsync("getAllApartment");
         };
+        client.On("nextTurn", response =>
+        {
+            logManager.AddLog(response.ToString());
+            Debug.Log(response);
+        });
+        client.On("nextUser", response =>
+        {
+            logManager.AddLog(response.ToString());
+            string message = JsonConvert.DeserializeObject<string>(response.ToString());
+            Debug.Log(response);
+        });
+        client.On("apartments", response =>
+        {
+            Debug.Log(response);
+            string[] message = JsonConvert.DeserializeObject<string[]>(response.ToString());
+            // string[] apartments = response.ToString().Split(',');
+            Debug.Log(message);
+        });
         await client.ConnectAsync();
     }
 
