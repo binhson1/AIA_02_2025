@@ -27,11 +27,13 @@ public class SocketConnection : MonoBehaviour
     private async void Connect()
     {
         client = new SocketIO("ws://192.168.1.200:3000");
+        // client = new SocketIO("ws://192.168.1.100:9456");
         client.OnConnected += async (sender, e) =>
         {
             Debug.Log("Connected");
             // logManager.AddLog("Connected");
             await client.EmitAsync("getAllApartment");
+            await client.EmitAsync("nextUser");
         };
         client.On("nextTurn", response =>
         {
@@ -44,14 +46,8 @@ public class SocketConnection : MonoBehaviour
             string message = JsonConvert.DeserializeObject<string>(response.ToString());
             Debug.Log(response);
         });
-        client.On("apartments", response =>
-        {
-            Debug.Log(response);
-            string[] message = JsonConvert.DeserializeObject<string[]>(response.ToString());
-            // string[] apartments = response.ToString().Split(',');
-            Debug.Log(message);
-        });
         await client.ConnectAsync();
+
     }
 
     private async void OnApplicationQuit()
