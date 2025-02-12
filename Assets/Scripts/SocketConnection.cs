@@ -33,17 +33,22 @@ public class SocketConnection : MonoBehaviour
             Debug.Log("Connected");
             // logManager.AddLog("Connected");
             await client.EmitAsync("getAllApartment");
-            await client.EmitAsync("nextUser");
+            // await client.EmitAsync("nextUser");
         };
-        client.On("nextTurn", response =>
+        client.On("nextTurn", async response =>
         {
-            logManager.AddLog(response.ToString());
+            await logManager.AddLog(response.ToString());
             Debug.Log(response);
         });
-        client.On("nextUser", response =>
+        client.On("nextUser", async response =>
         {
-            logManager.AddLog(response.ToString());
+            await logManager.AddLog(response.ToString());
             string message = JsonConvert.DeserializeObject<string>(response.ToString());
+            Debug.Log(response);
+        });
+        client.On("apartments", async response =>
+        {
+            // await logManager.AddLog(response.ToString());
             Debug.Log(response);
         });
         await client.ConnectAsync();

@@ -154,10 +154,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 859990009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 6.121227, y: 0}
+  m_SizeDelta: {x: 296.56396, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &55915953
 MonoBehaviour:
@@ -179,8 +179,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "AIA Vi\u1EC7t Nam: S\u1ED1ng Kh\u1ECFe h\u01A1n, L\xE2u h\u01A1n, H\u1EA1nh
-    ph\xFAc h\u01A1n!"
+  m_text: " Ch\xFAc m\u1EEBng 25 n\u0103m AIA Vi\u1EC7t Nam \u2013 h\xE0nh tr\xECnh
+    \u0111\u1EA7y t\u1EF1 h\xE0o!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -243,7 +243,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 284.8148, y: 17.83491, z: 313.29626, w: 16.785799}
+  m_margin: {x: 0.057678252, y: 17.83491, z: -0.81350696, w: 16.785799}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -419,7 +419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 200
-  textTransform: {fileID: 1902592645}
+  textTransform: {fileID: 0}
   startPositionX: -500
   endPositionX: 700
   numberOfDuplicates: 6
@@ -443,6 +443,8 @@ MonoBehaviour:
   speed: 100
   spacing: 50
   resetPositionX: 0
+  prefab: {fileID: 0}
+  height: 1
 --- !u!1 &324823229
 GameObject:
   m_ObjectHideFlags: 0
@@ -686,7 +688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 200
-  textTransform: {fileID: 1314355052}
+  textTransform: {fileID: 0}
   startPositionX: -500
   endPositionX: 600
   numberOfDuplicates: 3
@@ -700,7 +702,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 347299297}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14b4b3ff5f4ebe74dbe1d60b95017b95, type: 3}
   m_Name: 
@@ -710,6 +712,8 @@ MonoBehaviour:
   speed: 100
   spacing: 50
   resetPositionX: 0
+  prefab: {fileID: 0}
+  height: 1
 --- !u!1 &506115924
 GameObject:
   m_ObjectHideFlags: 0
@@ -1510,7 +1514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 200
-  textTransform: {fileID: 55915952}
+  textTransform: {fileID: 0}
   startPositionX: -500
   endPositionX: 600
   numberOfDuplicates: 3
@@ -1534,6 +1538,8 @@ MonoBehaviour:
   speed: 100
   spacing: 300
   resetPositionX: 600
+  prefab: {fileID: 15406372749092854, guid: e30092a1ba8c8734ea1d8172d00d58f7, type: 3}
+  height: 1
 --- !u!1 &918606521
 GameObject:
   m_ObjectHideFlags: 0
@@ -2941,7 +2947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 200
-  textTransform: {fileID: 807673926}
+  textTransform: {fileID: 0}
   startPositionX: -500
   endPositionX: 600
   numberOfDuplicates: 3
@@ -2965,6 +2971,8 @@ MonoBehaviour:
   speed: 100
   spacing: 50
   resetPositionX: 0
+  prefab: {fileID: 0}
+  height: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

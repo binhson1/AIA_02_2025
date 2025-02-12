@@ -11,6 +11,11 @@ public class ScrollingText : MonoBehaviour
 
     private List<RectTransform> textInstances = new List<RectTransform>();
     public float resetPositionX;
+    public GameObject prefab; // Prefab để gắn vào cuối phần tử
+
+    private GameObject prefabInstance; // Instance của prefab
+
+    public int height = 0;
 
     void Start()
     {
@@ -22,7 +27,11 @@ public class ScrollingText : MonoBehaviour
 
         RectTransform textRect = textPrefab.GetComponent<RectTransform>();
         // resetPositionX = textCount * spacing;
-
+        prefabInstance = Instantiate(prefab, textPrefab.GetComponent<RectTransform>());
+        prefabInstance.GetComponent<RectTransform>().anchoredPosition = new Vector2(
+            textPrefab.GetComponent<RectTransform>().rect.width / 2 + 3,
+            height
+        );
         // Tạo các bản sao text
         for (int i = 0; i < textCount; i++)
         {
@@ -35,6 +44,15 @@ public class ScrollingText : MonoBehaviour
 
     void Update()
     {
+        if (textPrefab != null)
+        {
+            foreach (var duplicateTransform in textInstances)
+            {
+                var duplicateTMP = duplicateTransform.GetComponent<TextMeshProUGUI>();
+                duplicateTMP.text = textPrefab.text;
+                duplicateTMP.fontSize = textPrefab.fontSize;
+            }
+        }
         for (int i = 0; i < textInstances.Count; i++)
         {
             RectTransform textRect = textInstances[i];
@@ -46,6 +64,7 @@ public class ScrollingText : MonoBehaviour
                 float maxX = GetMaxXPosition();
                 textRect.anchoredPosition = new Vector2(maxX + spacing, 0);
             }
+
         }
     }
 
