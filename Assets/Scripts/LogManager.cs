@@ -14,7 +14,7 @@ public class LogManager : MonoBehaviour
     [SerializeField] private ScrollRect scrollRect; // ScrollRect của ScrollView
 
     // Hàm để thêm nội dung mới vào ScrollView
-    public async Task AddLog(string message)
+    public void AddLog(string message)
     {
         // Tạo một đối tượng Text mới từ prefab
         GameObject newTextObject = Instantiate(textPrefab, content);

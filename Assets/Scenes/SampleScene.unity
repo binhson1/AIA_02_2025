@@ -156,7 +156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6.121227, y: 0}
+  m_AnchoredPosition: {x: 6.121227, y: 32.000008}
   m_SizeDelta: {x: 296.56396, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &55915953
@@ -286,6 +286,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69a374349035b54498419bf4b62a6e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameTxT: {fileID: 617943624}
+  hashtag1: {fileID: 1448305856}
+  hashtag2: {fileID: 55915953}
+  hashtag3: {fileID: 1120163611}
   logManager: {fileID: 774906970}
 --- !u!4 &163853801
 Transform:
@@ -912,8 +916,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: " Ch\xFAc m\u1EEBng 25 n\u0103m AIA Vi\u1EC7t Nam \u2013 h\xE0nh tr\xECnh
-    \u0111\u1EA7y t\u1EF1 h\xE0o!"
+  m_text: NGUYEN VAN A
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1006,7 +1009,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6.121227, y: 0}
+  m_AnchoredPosition: {x: 6.121227, y: 32}
   m_SizeDelta: {x: 296.56396, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &705507993
@@ -1976,8 +1979,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: " Ch\xFAc m\u1EEBng 25 n\u0103m AIA Vi\u1EC7t Nam \u2013 h\xE0nh tr\xECnh
-    \u0111\u1EA7y t\u1EF1 h\xE0o!"
+  m_text: "1% t\u1ED1t h\u01A1n m\u1ED7i ng\xE0y c\xF9ng AIA"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2070,7 +2072,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6.121227, y: 0}
+  m_AnchoredPosition: {x: 6.121227, y: 32.000008}
   m_SizeDelta: {x: 296.56396, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1448305855
@@ -2111,8 +2113,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: " Ch\xFAc m\u1EEBng 25 n\u0103m AIA Vi\u1EC7t Nam \u2013 h\xE0nh tr\xECnh
-    \u0111\u1EA7y t\u1EF1 h\xE0o!"
+  m_text: Congratulations to AIA Vietnam - 25 years of inspiration
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2205,7 +2206,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6.121227, y: 0}
+  m_AnchoredPosition: {x: 6.121227, y: 32.000008}
   m_SizeDelta: {x: 296.56396, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1472713109
