@@ -22,7 +22,7 @@ public class SocketConnection : MonoBehaviour
     private class UserData
     {
         public int id { get; set; }
-        public string nameTxT { get; set; }
+        public string name { get; set; }
         public string hashtag { get; set; }
         public bool played { get; set; }
         public string createdAt { get; set; }
@@ -40,43 +40,34 @@ public class SocketConnection : MonoBehaviour
         if (responseQueue.TryDequeue(out string response))
         {
             // Giải mã JSON thành đối tượng UserData
-            UserData userData = JsonConvert.DeserializeObject<UserData>(response);
-
-            if (userData != null)
-            {
-                // Cập nhật tên
-                nameTxT.text = userData.nameTxT;
-
-                // Tách các hashtag và cập nhật
-                string[] hashtags = userData.hashtag.Split(new[] { ", " }, System.StringSplitOptions.None);
-                if (hashtags.Length > 0) hashtag1.text = hashtags[0];
-                if (hashtags.Length > 1) hashtag2.text = hashtags[1];
-                if (hashtags.Length > 2) hashtag3.text = hashtags[2];
-            }
+            processUserData(response);
         }
     }
 
     private async void Connect()
     {
-        client = new SocketIO("ws://192.168.1.200:3000");
-
+        // client = new SocketIO("ws://192.168.1.200:3000");
+        client = new SocketIO("ws://192.168.1.100:9456");
         client.OnConnected += async (sender, e) =>
         {
             Debug.Log("Connected");
             logManager.AddLog("Connected");
-            await client.EmitAsync("getAllApartment");
+            // await client.EmitAsync("getAllApartment");
         };
-
-        client.On(nextTurn, async response =>
+        client.On(nextTurn, response =>
         {
             // Khi nhận được sự kiện nextTurn, gửi yêu cầu nextUser
-            await client.EmitAsync(nextUser);
+            Debug.Log(response.ToString());
+            client.EmitAsync(nextUser);
         });
-
-        client.On(nextUser, response =>
+        client.On("nextUser", async (response) =>
         {
             // Thêm phản hồi vào hàng đợi
-            responseQueue.Enqueue(response.ToString());
+            Debug.Log(response.ToString());
+            if (response != null)
+            {
+                responseQueue.Enqueue(response.ToString());
+            }
         });
 
         await client.ConnectAsync();
@@ -87,6 +78,25 @@ public class SocketConnection : MonoBehaviour
         if (client != null && client.Connected)
         {
             await client.DisconnectAsync();
+        }
+    }
+
+    public void processUserData(string response)
+    {
+        List<UserData> userDataList = JsonConvert.DeserializeObject<List<UserData>>(response);
+
+        if (userDataList != null && userDataList.Count > 0)
+        {
+            UserData userData = userDataList[0]; // Lấy phần tử đầu tiên
+
+            // Cập nhật tên
+            nameTxT.text = userData.name;
+
+            // Tách các hashtag và cập nhật
+            string[] hashtags = userData.hashtag.Split(new[] { ", " }, System.StringSplitOptions.None);
+            if (hashtags.Length > 0) hashtag1.text = hashtags[0];
+            if (hashtags.Length > 1) hashtag2.text = hashtags[1];
+            if (hashtags.Length > 2) hashtag3.text = hashtags[2];
         }
     }
 }
