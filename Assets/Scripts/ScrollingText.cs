@@ -37,7 +37,7 @@ public class ScrollingText : MonoBehaviour
         {
             TextMeshProUGUI newText = Instantiate(textPrefab, transform);
             RectTransform newRect = newText.GetComponent<RectTransform>();
-            newRect.anchoredPosition = new Vector2(i * spacing, 0);
+            newRect.anchoredPosition = new Vector2(i * textPrefab.GetComponent<RectTransform>().rect.width, 0);
             textInstances.Add(newRect);
         }
     }
@@ -62,7 +62,7 @@ public class ScrollingText : MonoBehaviour
             if (textRect.anchoredPosition.x < -resetPositionX)
             {
                 float maxX = GetMaxXPosition();
-                textRect.anchoredPosition = new Vector2(maxX + spacing, 0);
+                textRect.anchoredPosition = new Vector2(maxX + textPrefab.GetComponent<RectTransform>().rect.width, 0);
             }
 
         }

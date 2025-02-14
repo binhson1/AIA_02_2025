@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8954713565972249731}
   - component: {fileID: 8702862683370560633}
   - component: {fileID: 7178679856236769823}
-  - component: {fileID: 5587453383027261219}
   m_Layer: 5
   m_Name: Dot TxT
   m_TagString: Untagged
@@ -93,10 +92,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 11
   m_fontSizeMax: 18
   m_fontStyle: 1
@@ -129,29 +128,9 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 16.785805, z: 0, w: 17.83492}
+  m_margin: {x: 0, y: 0.3085251, z: 0, w: 0.34885216}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &5587453383027261219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 15406372749092854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18b9ecf87ce0bcf4eac5b72484e8fb64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 50
-  textTransform: {fileID: 0}
-  startPositionX: -500
-  endPositionX: 500
-  numberOfDuplicates: 2
-  spacingPoint: 550
-  prefab: {fileID: 0}
-  height: 15
