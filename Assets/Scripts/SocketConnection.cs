@@ -5,6 +5,7 @@ using SocketIOClient;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
+using SocketIOClient.Newtonsoft.Json;
 
 public class SocketConnection : MonoBehaviour
 {
@@ -48,10 +49,13 @@ public class SocketConnection : MonoBehaviour
     {
         // client = new SocketIO("ws://192.168.1.200:3000");
         client = new SocketIO("ws://192.168.1.100:9456");
+        client.JsonSerializer = new NewtonsoftJsonSerializer();
         client.OnConnected += async (sender, e) =>
         {
             Debug.Log("Connected");
             logManager.AddLog("Connected");
+            // await client.EmitAsync("nextUser");
+            Debug.Log("Sent nextUser");
             // await client.EmitAsync("getAllApartment");
         };
         client.On(nextTurn, response =>
@@ -96,7 +100,8 @@ public class SocketConnection : MonoBehaviour
             string[] hashtags = userData.hashtag.Split(new[] { ", " }, System.StringSplitOptions.None);
             if (hashtags.Length > 0) hashtag1.text = hashtags[0];
             if (hashtags.Length > 1) hashtag2.text = hashtags[1];
-            if (hashtags.Length > 2) hashtag3.text = hashtags[2];
+            // if (hashtags.Length > 2) hashtag3.text = hashtags[2];
+            hashtag3.text = userData.name;
         }
     }
 }

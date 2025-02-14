@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class ScrollingText : MonoBehaviour
 {
     public TextMeshProUGUI textPrefab;  // Prefab của Text cần chạy
     public int textCount = 5;           // Số lượng clone của text
-    public float speed = 100f;          // Tốc độ chạy của text
-    public float spacing = 300f;        // Khoảng cách giữa các chữ
+    public float speed = 100f;          // Tốc độ chạy của text    
 
     private List<RectTransform> textInstances = new List<RectTransform>();
     public float resetPositionX;
@@ -15,6 +15,7 @@ public class ScrollingText : MonoBehaviour
 
     private GameObject prefabInstance; // Instance của prefab
 
+    public int dotspacing = 3;
     public int height = 0;
 
     void Start()
@@ -29,7 +30,7 @@ public class ScrollingText : MonoBehaviour
         // resetPositionX = textCount * spacing;
         prefabInstance = Instantiate(prefab, textPrefab.GetComponent<RectTransform>());
         prefabInstance.GetComponent<RectTransform>().anchoredPosition = new Vector2(
-            textPrefab.GetComponent<RectTransform>().rect.width / 2 + 3,
+            textPrefab.GetComponent<RectTransform>().rect.width / 2 + dotspacing,
             height
         );
         // Tạo các bản sao text
@@ -37,7 +38,7 @@ public class ScrollingText : MonoBehaviour
         {
             TextMeshProUGUI newText = Instantiate(textPrefab, transform);
             RectTransform newRect = newText.GetComponent<RectTransform>();
-            newRect.anchoredPosition = new Vector2(i * textPrefab.GetComponent<RectTransform>().rect.width, 0);
+            newRect.anchoredPosition = new Vector2(i * textPrefab.GetComponent<RectTransform>().rect.width + dotspacing * 2, 0);
             textInstances.Add(newRect);
         }
     }
@@ -50,11 +51,31 @@ public class ScrollingText : MonoBehaviour
             {
                 var duplicateTMP = duplicateTransform.GetComponent<TextMeshProUGUI>();
                 duplicateTMP.text = textPrefab.text;
+                var rectTransform = duplicateTMP.GetComponent<RectTransform>();
+                rectTransform.sizeDelta = new Vector2(textPrefab.GetComponent<RectTransform>().rect.width, rectTransform.sizeDelta.y);
                 duplicateTMP.fontSize = textPrefab.fontSize;
             }
         }
         for (int i = 0; i < textInstances.Count; i++)
         {
+
+            // nếu width thay đổi thì cập nhật lại width của text clone
+            if (textInstances[i].rect.width != textPrefab.GetComponent<RectTransform>().rect.width)
+            {
+                if (textInstances[i].rect.width > textPrefab.GetComponent<RectTransform>().rect.width)
+                {
+                    textInstances[i].anchoredPosition = new Vector2(textInstances[i].sizeDelta.x + Math.Abs(textInstances[i].rect.width - textPrefab.GetComponent<RectTransform>().rect.width), textInstances[i].sizeDelta.y);
+                    textInstances[i].sizeDelta = new Vector2(textPrefab.GetComponent<RectTransform>().rect.width, textInstances[i].sizeDelta.y);
+                }
+                else
+                {
+                    textInstances[i].anchoredPosition = new Vector2(textInstances[i].sizeDelta.x - Math.Abs(textInstances[i].rect.width - textPrefab.GetComponent<RectTransform>().rect.width), textInstances[i].sizeDelta.y);
+                    textInstances[i].sizeDelta = new Vector2(textPrefab.GetComponent<RectTransform>().rect.width, textInstances[i].sizeDelta.y);
+                }
+
+                Debug.Log("textInstances[i].rect.width: " + textInstances[i].rect.width);
+            }
+
             RectTransform textRect = textInstances[i];
             textRect.anchoredPosition += Vector2.left * speed * Time.deltaTime;
 
@@ -62,7 +83,7 @@ public class ScrollingText : MonoBehaviour
             if (textRect.anchoredPosition.x < -resetPositionX)
             {
                 float maxX = GetMaxXPosition();
-                textRect.anchoredPosition = new Vector2(maxX + textPrefab.GetComponent<RectTransform>().rect.width, 0);
+                textRect.anchoredPosition = new Vector2(maxX + textPrefab.GetComponent<RectTransform>().rect.width + dotspacing * 2, 0);
             }
 
         }

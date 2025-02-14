@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &163853800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,10 +151,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69a374349035b54498419bf4b62a6e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameTxT: {fileID: 0}
-  hashtag1: {fileID: 0}
-  hashtag2: {fileID: 0}
-  hashtag3: {fileID: 1120163611}
+  nameTxT: {fileID: 437084726}
+  hashtag1: {fileID: 565268854}
+  hashtag2: {fileID: 1120163611}
+  hashtag3: {fileID: 479850123}
   logManager: {fileID: 774906970}
 --- !u!4 &163853801
 Transform:
@@ -190,7 +190,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &284791932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,13 +286,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14b4b3ff5f4ebe74dbe1d60b95017b95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textPrefab: {fileID: 0}
+  textPrefab: {fileID: 437084726}
   textCount: 7
-  speed: 100
-  spacing: 580
-  resetPositionX: 600
+  speed: 200
+  resetPositionX: 2500
   prefab: {fileID: 15406372749092854, guid: e30092a1ba8c8734ea1d8172d00d58f7, type: 3}
-  height: 1
+  dotspacing: 30
+  height: 0
 --- !u!1 &324823229
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,13 +432,14 @@ GameObject:
   - component: {fileID: 347299299}
   - component: {fileID: 347299298}
   - component: {fileID: 347299302}
+  - component: {fileID: 347299303}
   m_Layer: 5
   m_Name: Canvas (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &347299298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -535,12 +536,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textPrefab: {fileID: 1120163611}
-  textCount: 7
-  speed: 100
-  spacing: 580
-  resetPositionX: 600
+  textCount: 5
+  speed: 200
+  resetPositionX: 2500
   prefab: {fileID: 15406372749092854, guid: e30092a1ba8c8734ea1d8172d00d58f7, type: 3}
-  height: 1
+  dotspacing: 3
+  height: 0
+--- !u!114 &347299303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347299297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be6e1167cd03e0043a76139999d63e54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tmpText: {fileID: 1120163611}
+  rectTransform: {fileID: 1120163613}
 --- !u!1 &437084724
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,6 +567,7 @@ GameObject:
   - component: {fileID: 437084725}
   - component: {fileID: 437084727}
   - component: {fileID: 437084726}
+  - component: {fileID: 437084728}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -575,7 +591,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.504314, y: 0}
+  m_AnchoredPosition: {x: 16.504314, y: 114}
   m_SizeDelta: {x: 568.8856, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &437084726
@@ -598,7 +614,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "1% t\u1ED1t h\u01A1n m\u1ED7i ng\xE0y c\xF9ng AIA"
+  m_text: NGUYEN HUYNH BAO NGOC
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -675,6 +691,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437084724}
   m_CullTransparentMesh: 1
+--- !u!114 &437084728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437084724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be6e1167cd03e0043a76139999d63e54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tmpText: {fileID: 437084726}
+  rectTransform: {fileID: 437084725}
 --- !u!1 &479850121
 GameObject:
   m_ObjectHideFlags: 0
@@ -686,6 +716,7 @@ GameObject:
   - component: {fileID: 479850122}
   - component: {fileID: 479850124}
   - component: {fileID: 479850123}
+  - component: {fileID: 479850125}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -709,7 +740,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.504314, y: 0}
+  m_AnchoredPosition: {x: 16.504314, y: 80}
   m_SizeDelta: {x: 568.8856, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &479850123
@@ -732,7 +763,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "1% t\u1ED1t h\u01A1n m\u1ED7i ng\xE0y c\xF9ng AIA"
+  m_text: NGUYEN HUYNH BAO NGOC
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -809,6 +840,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 479850121}
   m_CullTransparentMesh: 1
+--- !u!114 &479850125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479850121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be6e1167cd03e0043a76139999d63e54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tmpText: {fileID: 479850123}
+  rectTransform: {fileID: 479850122}
 --- !u!1 &506115924
 GameObject:
   m_ObjectHideFlags: 0
@@ -1525,7 +1570,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &859990006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1621,13 +1666,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14b4b3ff5f4ebe74dbe1d60b95017b95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textPrefab: {fileID: 0}
+  textPrefab: {fileID: 479850123}
   textCount: 7
-  speed: 100
-  spacing: 580
-  resetPositionX: 600
+  speed: 200
+  resetPositionX: 2500
   prefab: {fileID: 15406372749092854, guid: e30092a1ba8c8734ea1d8172d00d58f7, type: 3}
-  height: 1
+  dotspacing: 20
+  height: 0
 --- !u!1 &918606521
 GameObject:
   m_ObjectHideFlags: 0
@@ -2127,7 +2172,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "1% t\u1ED1t h\u01A1n m\u1ED7i ng\xE0y c\xF9ng AIA"
+  m_text: Congratulations to AIA Vietnam - 25 years of inspiration
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2220,7 +2265,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.504314, y: 0}
+  m_AnchoredPosition: {x: 16.504314, y: 101}
   m_SizeDelta: {x: 568.8856, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1591326398
@@ -2865,10 +2910,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textPrefab: {fileID: 565268854}
   textCount: 5
-  speed: 500
-  spacing: 580
+  speed: 200
   resetPositionX: 2500
   prefab: {fileID: 15406372749092854, guid: e30092a1ba8c8734ea1d8172d00d58f7, type: 3}
+  dotspacing: 3
   height: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
