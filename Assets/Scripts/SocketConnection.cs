@@ -54,7 +54,7 @@ public class SocketConnection : MonoBehaviour
         {
             Debug.Log("Connected");
             logManager.AddLog("Connected");
-            // await client.EmitAsync("nextUser");
+            await client.EmitAsync("nextUser");
             Debug.Log("Sent nextUser");
             // await client.EmitAsync("getAllApartment");
         };
@@ -64,7 +64,7 @@ public class SocketConnection : MonoBehaviour
             Debug.Log(response.ToString());
             client.EmitAsync(nextUser);
         });
-        client.On("nextUser", async (response) =>
+        client.On("nextUser",  (response) =>
         {
             // Thêm phản hồi vào hàng đợi
             Debug.Log(response.ToString());
@@ -94,14 +94,14 @@ public class SocketConnection : MonoBehaviour
             UserData userData = userDataList[0]; // Lấy phần tử đầu tiên
 
             // Cập nhật tên
-            nameTxT.text = userData.name;
+            nameTxT.text = " " + userData.name + " •";
 
             // Tách các hashtag và cập nhật
             string[] hashtags = userData.hashtag.Split(new[] { ", " }, System.StringSplitOptions.None);
-            if (hashtags.Length > 0) hashtag1.text = hashtags[0];
-            if (hashtags.Length > 1) hashtag2.text = hashtags[1];
+            if (hashtags.Length > 0) hashtag1.text = " " + hashtags[0] + " •";
+            if (hashtags.Length > 1) hashtag2.text = " " + hashtags[1] + " •";
             // if (hashtags.Length > 2) hashtag3.text = hashtags[2];
-            hashtag3.text = userData.name;
+            hashtag3.text = " " + userData.name + " •";
         }
     }
 }

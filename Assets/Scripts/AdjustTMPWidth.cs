@@ -15,7 +15,7 @@ public class AdjustTMPWidth : MonoBehaviour
     {
         AdjustWidth();
     }
-    void AdjustWidth()
+    public void AdjustWidth()
     {
         if (tmpText == null || rectTransform == null) return;
 
