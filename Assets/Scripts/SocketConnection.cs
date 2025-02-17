@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
 using SocketIOClient.Newtonsoft.Json;
+using System;
 
 public class SocketConnection : MonoBehaviour
 {
@@ -17,9 +18,11 @@ public class SocketConnection : MonoBehaviour
     private const string nextUser = "nextUser";
     private const string nextTurn = "nextTurn";
     private ConcurrentQueue<string> responseQueue = new ConcurrentQueue<string>();
+    private ConcurrentQueue<string> logQueue = new ConcurrentQueue<string>();
     public LogManager logManager;
+    public string ip = "ws://192.168.0.105:9456";
+    private bool isReconnecting = false;
 
-    // Lớp để ánh xạ dữ liệu JSON
     private class UserData
     {
         public int id { get; set; }
@@ -31,50 +34,107 @@ public class SocketConnection : MonoBehaviour
         public string deletedAt { get; set; }
     }
 
+    private IEnumerator startConnection()
+    {
+        yield return new WaitForSeconds(3);
+        Connect();
+    }
     void Start()
     {
-        Connect();
+        startConnection();
+        // StartCoroutine(ReconnectRoutine());
     }
 
     void Update()
     {
         if (responseQueue.TryDequeue(out string response))
         {
-            // Giải mã JSON thành đối tượng UserData
             processUserData(response);
+        }
+        if (logQueue.TryDequeue(out string log))
+        {
+            logManager.AddLog(log);
+        }
+
+        if (client != null && !client.Connected && !isReconnecting)
+        {
+            logQueue.Enqueue("Disconnected. Attempting to reconnect...");
+            StartCoroutine(ReconnectRoutine());
         }
     }
 
     private async void Connect()
     {
-        // client = new SocketIO("ws://192.168.1.200:3000");
-        client = new SocketIO("ws://192.168.1.100:9456");
-        client.JsonSerializer = new NewtonsoftJsonSerializer();
-        client.OnConnected += async (sender, e) =>
+        if (string.IsNullOrEmpty(ip) || !Uri.IsWellFormedUriString(ip, UriKind.Absolute))
         {
-            Debug.Log("Connected");
-            logManager.AddLog("Connected");
-            await client.EmitAsync("nextUser");
-            Debug.Log("Sent nextUser");
-            // await client.EmitAsync("getAllApartment");
-        };
-        client.On(nextTurn, response =>
-        {
-            // Khi nhận được sự kiện nextTurn, gửi yêu cầu nextUser
-            Debug.Log(response.ToString());
-            client.EmitAsync(nextUser);
-        });
-        client.On("nextUser",  (response) =>
-        {
-            // Thêm phản hồi vào hàng đợi
-            Debug.Log(response.ToString());
-            if (response != null)
-            {
-                responseQueue.Enqueue(response.ToString());
-            }
-        });
+            logQueue.Enqueue("Invalid IP address. Connection aborted.");
+            return;
+        }
 
-        await client.ConnectAsync();
+        try
+        {
+            logQueue.Enqueue("Connecting to " + ip);
+
+            client = new SocketIO(ip);
+            client.JsonSerializer = new NewtonsoftJsonSerializer();
+
+            client.OnConnected += async (sender, e) =>
+            {
+                logQueue.Enqueue("Connected");
+                await client.EmitAsync("nextUser");
+                logQueue.Enqueue("Sent nextUser");
+            };
+
+            client.On(nextTurn, response =>
+            {
+                logQueue.Enqueue("Received nextTurn");
+                client.EmitAsync(nextUser);
+            });
+            client.On("nextUser", response =>
+            {
+                if (response != null)
+                {
+                    responseQueue.Enqueue(response.ToString());
+                }
+                logQueue.Enqueue("Received nextUser: " + response);
+            });
+            client.OnDisconnected += async (sender, e) =>
+            {
+                logQueue.Enqueue("Disconnected. Reconnecting...");
+                StartCoroutine(ReconnectRoutine());
+            };
+
+            await client.ConnectAsync();
+        }
+        catch (System.Exception ex)
+        {
+            logQueue.Enqueue("Connection failed: " + ex.Message);
+        }
+    }
+
+
+    private IEnumerator ReconnectRoutine()
+    {
+        if (isReconnecting) yield break;
+
+        isReconnecting = true;
+        int retryCount = 0;
+        const int maxRetries = 5;
+
+        while ((!client?.Connected ?? true) && retryCount < maxRetries)
+        {
+            logQueue.Enqueue($"Attempting to reconnect... (Attempt {retryCount + 1}/{maxRetries})");
+            Connect();
+            retryCount++;
+            yield return new WaitForSeconds(5);
+        }
+
+        if (retryCount >= maxRetries)
+        {
+            logQueue.Enqueue("Max reconnect attempts reached. Stopping reconnection.");
+        }
+
+        isReconnecting = false;
     }
 
     private async void OnApplicationQuit()
@@ -91,17 +151,28 @@ public class SocketConnection : MonoBehaviour
 
         if (userDataList != null && userDataList.Count > 0)
         {
-            UserData userData = userDataList[0]; // Lấy phần tử đầu tiên
+            UserData userData = userDataList[0];
 
-            // Cập nhật tên
             nameTxT.text = " " + userData.name + " •";
 
-            // Tách các hashtag và cập nhật
             string[] hashtags = userData.hashtag.Split(new[] { ", " }, System.StringSplitOptions.None);
             if (hashtags.Length > 0) hashtag1.text = " " + hashtags[0] + " •";
             if (hashtags.Length > 1) hashtag2.text = " " + hashtags[1] + " •";
-            // if (hashtags.Length > 2) hashtag3.text = hashtags[2];
             hashtag3.text = " " + userData.name + " •";
+        }
+    }
+
+    public void UpdateIP(string newIP)
+    {
+        if (ip != newIP)
+        {
+            ip = newIP;
+            logQueue.Enqueue("IP updated to: " + ip);
+            if (client != null && client.Connected)
+            {
+                client.DisconnectAsync();
+            }
+            StartCoroutine(ReconnectRoutine());
         }
     }
 }
