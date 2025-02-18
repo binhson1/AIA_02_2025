@@ -5,7 +5,7 @@ using UnityEngine;
 public class AdjustTime : MonoBehaviour
 {
     public TMP_InputField timeInput;
-    public float time = 10f; 
+    public float time = 5f;
 
     void Start()
     {

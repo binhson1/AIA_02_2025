@@ -26,8 +26,7 @@ public class CenterDup : MonoBehaviour
             TMPro.TextMeshProUGUI newLeftText = Instantiate(centerText, transform);
             TMPro.TextMeshProUGUI newRightText = Instantiate(centerText, transform);
             RectTransform leftRect = newLeftText.GetComponent<RectTransform>();
-            RectTransform rightRect = newRightText.GetComponent<RectTransform>();
-            float halfWidth = centerText.GetComponent<RectTransform>().rect.width / 2;
+            RectTransform rightRect = newRightText.GetComponent<RectTransform>();            
             float width = centerText.GetComponent<RectTransform>().rect.width;
             leftRect.anchoredPosition = new Vector2(-i * centerText.GetComponent<RectTransform>().rect.width - width, 0);
             rightRect.anchoredPosition = new Vector2(i * centerText.GetComponent<RectTransform>().rect.width + width, 0);
