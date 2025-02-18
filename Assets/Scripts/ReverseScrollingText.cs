@@ -12,7 +12,7 @@ public class ReverseScrollingText : MonoBehaviour
 
     private List<RectTransform> textInstances = new List<RectTransform>();
     public float resetPositionX = -2500;
-
+    public AdjustTMPWidth adjustTMPWidth;
     public float startpoint = -500;
 
     void Start()
@@ -35,7 +35,7 @@ public class ReverseScrollingText : MonoBehaviour
             Destroy(textInstance.gameObject);
         }
         textInstances.Clear();
-
+        adjustTMPWidth.AdjustWidth();
         // Tạo các bản sao text mới
         for (int i = 0; i < textCount; i++)
         {

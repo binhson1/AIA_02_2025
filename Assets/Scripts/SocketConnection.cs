@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 using System.Collections.Concurrent;
 using SocketIOClient.Newtonsoft.Json;
 using System;
-using Unity.VisualScripting;
 
 public class SocketConnection : MonoBehaviour
 {
@@ -21,15 +20,13 @@ public class SocketConnection : MonoBehaviour
     private const string nextTurn = "nextTurn";
     private const string newUser = "newUser";
     private ConcurrentQueue<string> responseQueue = new ConcurrentQueue<string>();
-    private ConcurrentQueue<string> logQueue = new ConcurrentQueue<string>();
-    private ConcurrentQueue<string> cowndownQueue = new ConcurrentQueue<string>();
+    private ConcurrentQueue<string> logQueue = new ConcurrentQueue<string>();    
     public LogManager logManager;
     public StartEnding startEnding;
     public string ip = "ws://192.168.0.105:9456";
-    private bool isReconnecting = false;
-    public bool isTimeOut = false;
+    private bool isReconnecting = false;    
     public AdjustTime adjustTime;
-    private string testData = "[{\"id\":5,\"name\":\"PHAN NGUYEN HUYNH BAO NGOC\",\"hashtag\":\"Chúc Mừng 25 Năm AIA Việt Nam + Hành Trình Đầy Tự Hào;Congratulations To AIA Vietnam + 25 Years Of Inspiration\",\"played\":false,\"createdAt\":\"2025-02-10T07:32:08.000Z\",\"updatedAt\":\"2025-02-10T07:32:08.000Z\",\"deletedAt\":null}]";
+    private string testData = "[{\"id\":5,\"name\":\" nguyễn văn an \",\"hashtag\":\"Chúc Mừng 25 Năm AIA Việt Nam + Hành Trình Đầy Tự Hào;Congratulations To AIA Vietnam + 25 Years Of Inspiration\",\"played\":false,\"createdAt\":\"2025-02-10T07:32:08.000Z\",\"updatedAt\":\"2025-02-10T07:32:08.000Z\",\"deletedAt\":null}]";
     private class UserData
     {
         public int id { get; set; }
@@ -39,16 +36,11 @@ public class SocketConnection : MonoBehaviour
         public string createdAt { get; set; }
         public string updatedAt { get; set; }
         public string deletedAt { get; set; }
-    }
-    public void startConnection()
-    {
-        Connect();
-    }
+    }   
     void Start()
     {
-        processUserData(testData);
-        Invoke("startConnection", 3);
-        // StartCoroutine(ReconnectRoutine());
+        processUserData(testData);        
+        Invoke("Connect", 2);        
     }
 
     void Update()
@@ -60,10 +52,18 @@ public class SocketConnection : MonoBehaviour
         if (logQueue.TryDequeue(out string log))
         {
             logManager.AddLog(log);
+            if(log == "Disconnected. Reconnecting...")
+            {
+                StartCoroutine(ReconnectRoutine());
+            }
+            if(log == "Max reconnect attempts reached. Stopping reconnection.")
+            {
+                StartCoroutine(ReconnectRoutine());
+            }
         }
-        if (client != null && !client.Connected && !isReconnecting)
+        if (client == null && !isReconnecting)
         {
-            logQueue.Enqueue("Disconnected. Attempting to reconnect...");
+            logQueue.Enqueue("Disconnected. Attempting to reconnect...");            
             StartCoroutine(ReconnectRoutine());
         }
     }
@@ -113,7 +113,6 @@ public class SocketConnection : MonoBehaviour
             client.OnDisconnected += (sender, e) =>
             {
                 logQueue.Enqueue("Disconnected. Reconnecting...");
-                StartCoroutine(ReconnectRoutine());
             };
 
             await client.ConnectAsync();
@@ -126,7 +125,7 @@ public class SocketConnection : MonoBehaviour
     }
 
     private IEnumerator ReconnectRoutine()
-    {
+    {        
         if (isReconnecting) yield break;
 
         isReconnecting = true;
@@ -136,9 +135,9 @@ public class SocketConnection : MonoBehaviour
         while ((!client?.Connected ?? true) && retryCount < maxRetries)
         {
             logQueue.Enqueue($"Attempting to reconnect... (Attempt {retryCount + 1}/{maxRetries})");
-            Connect();
+            Connect();            
             retryCount++;
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(5);            
         }
 
         if (retryCount >= maxRetries)
@@ -165,8 +164,8 @@ public class SocketConnection : MonoBehaviour
         {
             UserData userData = userDataList[0];
 
-            firstNameTxT.text = " " + userData.name + " •";
-            secondNameTxT.text = " " + userData.name + " •";
+            firstNameTxT.text = "• " + userData.name.Trim().ToUpper() + " ";
+            secondNameTxT.text = "• " + userData.name.Trim().ToUpper() + " ";
             string[] hashtags = userData.hashtag.Split(new[] { ";" }, System.StringSplitOptions.None);
             string[] firsthastag = hashtags[0].Split(new[] { "+" }, System.StringSplitOptions.None);
             string[] secondhastag = hashtags[1].Split(new[] { "+" }, System.StringSplitOptions.None);

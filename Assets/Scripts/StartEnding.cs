@@ -26,12 +26,12 @@ public class StartEnding : MonoBehaviour
     {
         isWaiting = true;
         yield return new WaitForSeconds(adjustTime.time);
-        firstNameTxT.text = endingMessage;
-        hashtag1.text = endingMessage;
-        hashtag2.text = endingMessage;
-        hashtag3.text = endingMessage;
-        hashtag4.text = endingMessage;
-        secondNameTxT.text = endingMessage;
+        firstNameTxT.text = "• Chúc Mừng 25 Năm AIA Việt Nam Hành Trình Đầy Tự Hào";
+        hashtag1.text = "Congratulations To AIA Vietnam";
+        hashtag2.text = "25 Years Of Inspiration";
+        hashtag3.text = "Congratulations To AIA Vietnam";
+        hashtag4.text = "25 Years Of Inspiration";
+        secondNameTxT.text = "• Chúc Mừng 25 Năm AIA Việt Nam Hành Trình Đầy Tự Hào ";
         socketConnection.EmitNextUser();
         isWaiting = false;
     }

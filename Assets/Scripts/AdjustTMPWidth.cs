@@ -13,7 +13,7 @@ public class AdjustTMPWidth : MonoBehaviour
 
     void Update()
     {
-        AdjustWidth();
+        // AdjustWidth();
     }
     public void AdjustWidth()
     {
