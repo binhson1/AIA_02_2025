@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SocketIOClient;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
 using SocketIOClient.Newtonsoft.Json;
@@ -17,12 +16,17 @@ public class SocketConnection : MonoBehaviour
     public TMPro.TextMeshProUGUI hashtag3;
     private const string nextUser = "nextUser";
     private const string nextTurn = "nextTurn";
+    private const string newUser = "newUser";
     private ConcurrentQueue<string> responseQueue = new ConcurrentQueue<string>();
     private ConcurrentQueue<string> logQueue = new ConcurrentQueue<string>();
     public LogManager logManager;
     public string ip = "ws://192.168.0.105:9456";
     private bool isReconnecting = false;
 
+    public bool isTimeOut = false;
+
+    public AdjustTime adjustTime;
+    
     private class UserData
     {
         public int id { get; set; }
@@ -34,14 +38,13 @@ public class SocketConnection : MonoBehaviour
         public string deletedAt { get; set; }
     }
 
-    private IEnumerator startConnection()
+    public void startConnection()
     {
-        yield return new WaitForSeconds(3);
         Connect();
     }
     void Start()
     {
-        startConnection();
+        Invoke("startConnection", 3);        
         // StartCoroutine(ReconnectRoutine());
     }
 
@@ -84,7 +87,19 @@ public class SocketConnection : MonoBehaviour
                 await client.EmitAsync("nextUser");
                 logQueue.Enqueue("Sent nextUser");
             };
-
+            client.On("NewUser", response =>
+            {
+                if(!isTimeOut)
+                {
+                    if (response != null)
+                    {
+                        responseQueue.Enqueue(response.ToString());
+                        // couting down adjustTime.time
+                        StartCoroutine(CountDown());
+                    }
+                    logQueue.Enqueue("Received NewUser: " + response);
+                }
+            });
             client.On(nextTurn, response =>
             {
                 logQueue.Enqueue("Received nextTurn");
@@ -109,10 +124,20 @@ public class SocketConnection : MonoBehaviour
         catch (System.Exception ex)
         {
             logQueue.Enqueue("Connection failed: " + ex.Message);
+            StartCoroutine(ReconnectRoutine());
         }
     }
 
-
+    private IEnumerator CountDown()
+    {
+        isTimeOut = true;
+        yield return new WaitForSeconds(adjustTime.time);                    
+        isTimeOut = false;
+        nameTxT.text = "WELCOME TO THE SHOW";
+        hashtag1.text = "WELCOME TO THE SHOW";
+        hashtag2.text = "WELCOME TO THE SHOW";
+        hashtag3.text = "WELCOME TO THE SHOW";  
+    }
     private IEnumerator ReconnectRoutine()
     {
         if (isReconnecting) yield break;
@@ -160,19 +185,7 @@ public class SocketConnection : MonoBehaviour
             if (hashtags.Length > 1) hashtag2.text = " " + hashtags[1] + " •";
             hashtag3.text = " " + userData.name + " •";
         }
-    }
+    }        
 
-    public void UpdateIP(string newIP)
-    {
-        if (ip != newIP)
-        {
-            ip = newIP;
-            logQueue.Enqueue("IP updated to: " + ip);
-            if (client != null && client.Connected)
-            {
-                client.DisconnectAsync();
-            }
-            StartCoroutine(ReconnectRoutine());
-        }
-    }
+
 }

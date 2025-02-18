@@ -8,7 +8,7 @@ public class ReverseScrollingText : MonoBehaviour
 {
     public TextMeshProUGUI textPrefab;  // Prefab của Text cần chạy
     public int textCount = 5;           // Số lượng clone của text
-    public float speed = 100f;          // Tốc độ chạy của text    
+    public AdjustSpeed speedController; // Script điều chỉnh tốc độ
 
     private List<RectTransform> textInstances = new List<RectTransform>();
     public float resetPositionX = -2500;
@@ -59,7 +59,7 @@ public class ReverseScrollingText : MonoBehaviour
             {
                 RectTransform textRect = textInstances[i];
                 // Di chuyển text về bên phải
-                textRect.anchoredPosition += Vector2.right * speed * Time.deltaTime;
+                textRect.anchoredPosition += Vector2.right * speedController.speed * Time.deltaTime;
                 // Khi text di chuyển ra ngoài màn hình thì đặt lại vị trí
                 if (textRect.anchoredPosition.x > -resetPositionX)
                 {

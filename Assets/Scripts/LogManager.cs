@@ -12,8 +12,6 @@ public class LogManager : MonoBehaviour
     {
 
         string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); // Thời gian hiện tại
-        textPrefab.text += $"\n[{timestamp}] {message}";
-
-
+        textPrefab.text += $"[{timestamp}] {message} \n";
     }
 }
