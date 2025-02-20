@@ -20,11 +20,11 @@ public class SocketConnection : MonoBehaviour
     private const string nextTurn = "nextTurn";
     private const string newUser = "newUser";
     private ConcurrentQueue<string> responseQueue = new ConcurrentQueue<string>();
-    private ConcurrentQueue<string> logQueue = new ConcurrentQueue<string>();    
+    private ConcurrentQueue<string> logQueue = new ConcurrentQueue<string>();
     public LogManager logManager;
     public StartEnding startEnding;
     public string ip = "ws://192.168.0.105:9456";
-    private bool isReconnecting = false;    
+    private bool isReconnecting = false;
     public AdjustTime adjustTime;
     private string testData = "[{\"id\":5,\"name\":\" nguyễn văn an \",\"hashtag\":\"Chúc Mừng 25 Năm AIA Việt Nam + Hành Trình Đầy Tự Hào;Congratulations To AIA Vietnam + 25 Years Of Inspiration\",\"played\":false,\"createdAt\":\"2025-02-10T07:32:08.000Z\",\"updatedAt\":\"2025-02-10T07:32:08.000Z\",\"deletedAt\":null}]";
     private class UserData
@@ -36,11 +36,11 @@ public class SocketConnection : MonoBehaviour
         public string createdAt { get; set; }
         public string updatedAt { get; set; }
         public string deletedAt { get; set; }
-    }   
+    }
     void Start()
     {
-        processUserData(testData);        
-        Invoke("Connect", 2);        
+        processUserData(testData);
+        Invoke("Connect", 2);
     }
 
     void Update()
@@ -52,18 +52,18 @@ public class SocketConnection : MonoBehaviour
         if (logQueue.TryDequeue(out string log))
         {
             logManager.AddLog(log);
-            if(log == "Disconnected. Reconnecting...")
+            if (log == "Disconnected. Reconnecting...")
             {
                 StartCoroutine(ReconnectRoutine());
             }
-            if(log == "Max reconnect attempts reached. Stopping reconnection.")
+            if (log == "Max reconnect attempts reached. Stopping reconnection.")
             {
                 StartCoroutine(ReconnectRoutine());
             }
         }
         if (client == null && !isReconnecting)
         {
-            logQueue.Enqueue("Disconnected. Attempting to reconnect...");            
+            logQueue.Enqueue("Disconnected. Attempting to reconnect...");
             StartCoroutine(ReconnectRoutine());
         }
     }
@@ -125,7 +125,7 @@ public class SocketConnection : MonoBehaviour
     }
 
     private IEnumerator ReconnectRoutine()
-    {        
+    {
         if (isReconnecting) yield break;
 
         isReconnecting = true;
@@ -135,9 +135,9 @@ public class SocketConnection : MonoBehaviour
         while ((!client?.Connected ?? true) && retryCount < maxRetries)
         {
             logQueue.Enqueue($"Attempting to reconnect... (Attempt {retryCount + 1}/{maxRetries})");
-            Connect();            
+            Connect();
             retryCount++;
-            yield return new WaitForSeconds(5);            
+            yield return new WaitForSeconds(5);
         }
 
         if (retryCount >= maxRetries)
